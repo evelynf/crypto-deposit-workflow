@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'excon'
+require 'json'
 
 class ProClient
     API_PASSPHRASE = '3savwe1q6jb'
@@ -55,6 +56,30 @@ class ProClient
     }    
 
     post("/withdrawals/crypto", params)
+   end
+
+   def get_payment_method_id_for(currency, type)
+        res = get('/payment-methods')
+        if res.status != 200
+            raise BadRequestError, res.body
+        end
+
+        payment_methods = JSON.parse(res.body)
+        payment_methods.each do |payment_method|
+            # Simplify and assume only one payment method per type and currency
+            if payment_method['type'] == type && payment_method['currency'] == currency
+                return payment_method['id']
+            end
+        end
+
+        return nil
+   end
+
+   private
+
+   def post(path, params)
+      body = JSON.generate(params)
+      Excon.post(@api_url + path, :body => body, :headers => headers('POST', path, body))
    end
 
     def get(path)
