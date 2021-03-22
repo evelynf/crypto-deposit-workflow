@@ -17,10 +17,8 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 gem 'coinbase-exchange'
-gem 'faraday'
 gem 'excon'
-gem 'cadence-ruby', path: '~/src/cadence-ruby'
-gem 'http'
+gem 'cadence-ruby', path: '~/cadence-ruby'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

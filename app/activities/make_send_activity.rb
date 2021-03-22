@@ -14,7 +14,7 @@ class MakeSendActivity < Cadence::Activity
 
   def execute(amount, currency, crypto_address, destination_tag = nil)
       res = ProClient.send(amount, crypto_address, destination_tag)
-      raise UnableToSend, res.body if res.status != 200
+      raise UnableToSend, res[:body] if res[:status] != 200
       res
   end
 end

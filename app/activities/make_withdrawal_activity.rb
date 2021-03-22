@@ -1,5 +1,5 @@
-class MakeDepositActivity < Cadence::Activity
-    class UnableToDeposit < Cadence::ActivityException; end
+class MakeWithdrawalActivity < Cadence::Activity
+    class UnableToWithdraw < Cadence::ActivityException; end
   
     task_list 'deposits'
   
@@ -13,8 +13,8 @@ class MakeDepositActivity < Cadence::Activity
       )
   
     def execute(amount, currency, payment_method_id)
-        res = ProClient.deposit(amount, currency, payment_method_id)
-        raise UnableToDeposit, res[:body] if res[:status] != 200
-        res
+        res = ProClient.withdraw(amount, currency, payment_method_id)
+        raise UnableToWithdraw, res[:body] if res[:status] != 200
+        res[:body]
     end
 end

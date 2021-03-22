@@ -10,15 +10,12 @@ module ProClient
         API_KEY = 'be8b73a90575271a4f89c52d04d4a2ae'
         API_URL = "https://api-public.sandbox.pro.coinbase.com"
 
-        def place_order(type, side, product_id, **args)
-            raise ArgumentError, "size or funds are required args" unless (args[:size] || args[:funds])
-            
+        def place_order(type, side, product_id, args = {})            
             params = {
                 type: type,
                 side: side,
                 product_id: product_id,
-                **args
-            }
+            }.merge(args)
 
             post("/orders", params)
         end
@@ -54,33 +51,53 @@ module ProClient
             post("/withdrawals/crypto", params)
         end
 
+        def get_transfer(transfer_id)
+            get("/transfers/#{transfer_id}")
+        end
+
+        def get_order(order_id)
+            get("/orders/#{order_id}")
+        end
+
         def get_payment_method_id_for(currency, type)
-                res = get('/payment-methods')
-                if res.status != 200
-                    raise BadRequestError, res.body
-                end
+            res = get('/payment-methods')
+            if res[:status] != 200
+                raise BadRequestError, res[:body]
+            end
 
-                payment_methods = JSON.parse(res.body)
-                payment_methods.each do |payment_method|
-                    # Simplify and assume only one payment method per type and currency
-                    if payment_method['type'] == type && payment_method['currency'] == currency
-                        return payment_method['id']
-                    end
-                end
+            payment_methods = res[:body]
 
-                nil
+            payment_methods.each do |payment_method|
+                # Simplify and assume only one payment method per type and currency
+                if payment_method['type'] == type && payment_method['currency'] == currency
+                    return payment_method['id']
+                end
+            end
+
+            nil
         end
 
         private
 
         def post(path, params)
             body = JSON.generate(params)
-            Excon.post(API_URL + path, :body => body, :headers => headers('POST', path, body))
+            res = Excon.post(API_URL + path, :body => body, :headers => headers('POST', path, body))
+            response(res)
         end
 
         def get(path)
-            Excon.get(API_URL + path, :headers => headers('GET', path, ''))
+            res = Excon.get(API_URL + path, :headers => headers('GET', path, ''))
+            response(res)
         end
+
+        # TODO move this into its own class
+        def response(res)
+            object = {}
+            object[:status] = res.status
+            object[:body] = JSON.parse(res.body)
+            object
+        end
+        
 
         def headers(method, path, body)
             timestamp = Time.now.utc.to_i.to_s
