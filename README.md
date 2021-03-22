@@ -5,7 +5,7 @@ This project attempts to automate the manual process for users who need to conve
 # How to run
 1. Install Cadence locally, by following the directions here https://github.com/coinbase/cadence-ruby
 2. Create an API key on pro.coinbase.com with trade, transfer and view permissions
-3. Fill in the API variables in app/pro_client.rb and the desired address in scripts/deposit_usd_and_send_btc.rb
+3. Fill in the API variables in app/pro_client.rb and the desired params in scripts/deposit_usd_and_send_btc.rb
 4. In this order, run scripts/cadence_init.rb, scripts/cadence_workers.rb, and scripts/deposit_usd_and_send_btc.rb
 
 
