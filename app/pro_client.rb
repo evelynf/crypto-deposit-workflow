@@ -45,7 +45,7 @@ module ProClient
       params = {
         amount: amount,
         currency: currency,
-        address: address,
+        crypto_address: address,
         destination_tag: destination_tag
       }
 
