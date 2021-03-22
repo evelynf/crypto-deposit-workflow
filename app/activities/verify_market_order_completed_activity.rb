@@ -26,12 +26,12 @@ class VerifyMarketOrderCompletedActivity < Cadence::Activity
     order = res[:body]
     status = order['status']
 
-    if status == :pending
+    if status == 'pending'
       # retry if order is pending
       raise OrderPending
-    elsif status == :done && order['done_reason'] == 'filled'
-      nil
-    elsif status == :done && order['done_reason'] == 'canceled'
+    elsif status == 'done' && order['done_reason'] == 'filled'
+      return order
+    elsif status == 'done' && order['done_reason'] == 'canceled'
       raise OrderCanceled
     end
   end

@@ -28,13 +28,14 @@ class CryptoDepositWorkflow < Cadence::Workflow
         VerifyTransferCompletedActivity.execute!(deposit['id'])
       end
 
-      order = PlaceOrderActivity.execute!(:market, :buy, fiat_currency, crypto_currency, funds: fiat_amount)
+      order = PlaceOrderActivity.execute!(:market, :buy, crypto_currency, fiat_currency, funds: fiat_amount)
       # Sells enough crypto to cover the fiat amount deposited
       # If price of crypto drops, will sell more to cover it, otherwise will sell less crypto than originally purchased
-      saga.add_compensation(PlaceOrderActivity, :market, :sell, fiat_currency, crypto_currency, size: fiat_amount)
-      VerifyMarketOrderCompletedActivity.execute!(order['id'])
+      saga.add_compensation(PlaceOrderActivity, :market, :sell, crypto_currency, fiat_currency, size: fiat_amount)
 
-      send = MakeSendActivity.execute!(crypto_amount, crypto_address, destination_tag)
+      filled_order = VerifyMarketOrderCompletedActivity.execute!(order['id'])
+
+      send = MakeSendActivity.execute!(filled_order['filled_size'], currency, crypto_address, destination_tag)
       VerifyTransferCompletedActivity.execute!(send['id'])
     end
   end

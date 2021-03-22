@@ -12,6 +12,8 @@ class MakeWithdrawalActivity < Cadence::Activity
     expiration_interval: 10 * 60 # 10 minutes,
   )
 
+  # Warning: this activity is not idempotent because the pro api does not allow us to pass
+  # in an idempotency key
   def execute(amount, currency, payment_method_id)
     res = ProClient.withdraw(amount, currency, payment_method_id)
     raise UnableToWithdraw, res[:body] if res[:status] != 200
