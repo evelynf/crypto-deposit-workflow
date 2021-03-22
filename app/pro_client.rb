@@ -5,9 +5,9 @@ require 'base64'
 
 module ProClient
   class << self
-    API_PASSPHRASE = '3savwe1q6jb'
-    API_SECRET = 'ILM07+vmnyRd1VxZX7M8lFfGBmFnxt+7M0PDgzbFxCcTKPk7IIAF13VMhPR/R5UC/bgG8glx4DKcNQjh5CicLA=='
-    API_KEY = 'be8b73a90575271a4f89c52d04d4a2ae'
+    API_PASSPHRASE = ''
+    API_SECRET = ''
+    API_KEY = ''
     API_URL = 'https://api-public.sandbox.pro.coinbase.com'
 
     def place_order(type, side, product_id, args = {})
@@ -40,7 +40,7 @@ module ProClient
       post('/withdrawals/payment-method', params)
     end
 
-    def send(amount, currency, address, destination_tag: nil)
+    def send(amount, currency, address, destination_tag = nil)
       params = {
         amount: amount,
         currency: currency,

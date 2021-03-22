@@ -35,7 +35,7 @@ class CryptoDepositWorkflow < Cadence::Workflow
 
       filled_order = VerifyMarketOrderCompletedActivity.execute!(order['id'])
 
-      send = MakeSendActivity.execute!(filled_order['filled_size'], currency, crypto_address, destination_tag)
+      send = MakeSendActivity.execute!(filled_order['filled_size'], crypto_currency, crypto_address, destination_tag)
       VerifyTransferCompletedActivity.execute!(send['id'])
     end
   end

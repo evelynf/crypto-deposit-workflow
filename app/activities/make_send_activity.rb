@@ -13,8 +13,8 @@ class MakeSendActivity < Cadence::Activity
 
   # Warning: this activity is not idempotent because the pro api does not allow us to pass
   # in an idempotency key
-  def execute(amount, currency, crypto_address, destination_tag = nil)
-    res = ProClient.send(amount, currency, crypto_address, destination_tag)
+  def execute(amount, currency, address, destination_tag = nil)
+    res = ProClient.send(amount, currency, address, destination_tag)
     raise UnableToSend, res[:body] if res[:status] != 200
 
     res
