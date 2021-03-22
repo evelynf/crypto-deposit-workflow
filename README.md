@@ -17,6 +17,7 @@ Example where the workflow fails to make an order and so it rolls back and withd
 <img width="1774" alt="Screen Shot 2021-03-21 at 10 14 47 PM" src="https://user-images.githubusercontent.com/64184523/111939820-e2cee400-8a92-11eb-8b5c-2d4928115765.png">
 
 Example of successful workflow:
-<img width="1769" alt="Screen Shot 2021-03-21 at 10 25 04 PM" src="https://user-images.githubusercontent.com/64184523/111940748-1d398080-8a95-11eb-8e64-ee387211d146.png">
+<img width="1783" alt="Screen Shot 2021-03-22 at 10 11 29 AM" src="https://user-images.githubusercontent.com/64184523/112021605-14799680-8af7-11eb-9f53-8996d786b43d.png">
+
 
 
