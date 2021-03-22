@@ -17,6 +17,6 @@ class MakeSendActivity < Cadence::Activity
     res = ProClient.send(amount, currency, address, destination_tag)
     raise UnableToSend, res[:body] if res[:status] != 200
 
-    res
+    res[:body]
   end
 end
