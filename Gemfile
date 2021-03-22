@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coinbase-exchange'
 gem 'faraday'
 gem 'excon'
+gem 'cadence-ruby', path: '~/src/cadence-ruby'
 gem 'http'
 
 # Use CoffeeScript for .coffee assets and views
