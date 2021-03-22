@@ -4,6 +4,7 @@ require 'json'
 require 'base64'
 
 module ProClient
+  class BadRequestError < StandardError; end
   class << self
     API_PASSPHRASE = ''
     API_SECRET = ''
@@ -61,7 +62,7 @@ module ProClient
 
     def get_payment_method_id_for(currency, type)
       res = get('/payment-methods')
-      raise StandardError, res[:body] if res[:status] != 200
+      raise BadRequestError, res[:body] if res[:status] != 200
 
       payment_methods = res[:body]
 
