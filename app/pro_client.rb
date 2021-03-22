@@ -61,7 +61,7 @@ module ProClient
 
     def get_payment_method_id_for(currency, type)
       res = get('/payment-methods')
-      raise BadRequestError, res[:body] if res[:status] != 200
+      raise StandardError, res[:body] if res[:status] != 200
 
       payment_methods = res[:body]
 
