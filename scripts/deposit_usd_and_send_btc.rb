@@ -9,4 +9,4 @@ Cadence.start_workflow(CryptoDepositWorkflow,
                        fiat_currency: :USD,
                        fiat_amount: 1000,
                        payment_method_id: payment_method_id,
-                       crypto_address: '1JmYrFBLMSCLBwoL87gdQ5Qc9MLvb2egKk')
+                       crypto_address: '')
